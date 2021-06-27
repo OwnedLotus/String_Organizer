@@ -172,6 +172,8 @@ void Word(char str_array[iter][max])
 
         memory[j + 1] = temp_int_array[j];
         strcpy(str_array[j + 1], temp_array);
+
+        break;
       }
     }
   }
@@ -179,6 +181,5 @@ void Word(char str_array[iter][max])
   for (i = 0; i < iter; i++)
   {
     puts(str_array[i]);
-    printf(" ");
   }
 }
