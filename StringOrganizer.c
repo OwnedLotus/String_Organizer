@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define iter 10
 #define max 100
@@ -10,6 +11,7 @@ void Original(char str_array[iter][max]);
 void Ascii(char str_array[iter][max]);
 void Increase(char str_array[iter][max]);
 void Word(char str_array[iter][max]);
+//char* ClearString(char* inputString);
 
 int main()
 {
@@ -61,7 +63,7 @@ int main()
 
 char Menu()
 {
-  char a;
+  char* a;
 
   puts("Please Choose an Option: ");
   puts("a:    Print the original list of statements");
@@ -70,11 +72,13 @@ char Menu()
   puts("d:    Print the statements in the order of the longest word");
   puts("q:    Quit");
 
-  scanf(" %c", &a);
+  gets(a);
+
+  putchar(a[0]);
 
   printf("\n");
 
-  return a;
+  return a[0];
 }
 
 void Original(char str_array[iter][max])
@@ -82,7 +86,7 @@ void Original(char str_array[iter][max])
   for (int i = 0; i < iter; i++)
   {
     puts(str_array[i]);
-    printf("");
+    printf(" ");
   }
 }
 
@@ -107,7 +111,7 @@ void Ascii(char str_array[iter][max])
   for (int i = 0; i < iter; i++)
   {
     puts(str_array[i]);
-    printf("");
+    printf(" ");
   }
 }
 
@@ -133,7 +137,7 @@ void Increase(char str_array[iter][max])
   for (int i = 0; i < iter; i++)
   {
     puts(str_array[i]);
-    printf("");
+    printf(" ");
   }
 }
 
@@ -144,6 +148,8 @@ void Word(char str_array[iter][max])
   char temp_array[max];
   int temp_int_array[iter];
   int memory[iter];
+  
+  int notSwapped = 1;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "-1" defined in stdbool.h
 
   for (i = 0; i < iter; i++)
   {
@@ -160,20 +166,25 @@ void Word(char str_array[iter][max])
 
   for(i = 0; i < iter; i++)
   {
-    for(j = 0; j < iter - i - 1; j++)
+    while (notSwapped)
     {
-      if(memory[j] > memory[j + 1])
+      for(j = 0; j < iter - i - 1; j++)
       {
-        temp_int_array[i] = memory[j];
-        strcpy(temp_array, str_array[j]);
+          if(memory[j] > memory[j + 1])
+          {
+          temp_int_array[i] = memory[j];
+          strcpy(temp_array, str_array[j]);
 
-        memory[j] = memory[j + 1];
-        strcpy(str_array[j], str_array[j + 1]);
+          memory[j] = memory[j + 1];
+          strcpy(str_array[j], str_array[j + 1]);
 
-        memory[j + 1] = temp_int_array[j];
-        strcpy(str_array[j + 1], temp_array);
+          memory[j + 1] = temp_int_array[j];
+          strcpy(str_array[j + 1], temp_array);
 
-        break;
+
+          notSwapped == 0;
+          break;
+        }
       }
     }
   }
@@ -183,3 +194,13 @@ void Word(char str_array[iter][max])
     puts(str_array[i]);
   }
 }
+
+
+/*
+char* ClearString(char* clearString)
+{
+  clearString[0] = '\n';
+
+  return *clearString;
+}
+*/
