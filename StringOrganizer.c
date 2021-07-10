@@ -10,7 +10,7 @@ char Menu();
 void Original(char str_array[iter][max]);
 void Ascii(char str_array[iter][max]);
 void Increase(char str_array[iter][max]);
-void Word(char str_array[iter][max]);
+void WordSize(char str_array[iter][max]);
 //char* ClearString(char* inputString);
 
 int main()
@@ -44,7 +44,7 @@ int main()
       Increase(str_array);
       break;
     case 'd':
-      Word(str_array);
+      WordSize(str_array);
       break;
     case 'q':
       puts("Goodbye!");
@@ -63,7 +63,7 @@ int main()
 
 char Menu()
 {
-  char* a;
+  char a;
 
   puts("Please Choose an Option: ");
   puts("a:    Print the original list of statements");
@@ -74,11 +74,11 @@ char Menu()
 
   gets(a);
 
-  putchar(a[0]);
+  printf("Debug output: %c", a); // debug print shows what is given
 
-  printf("\n");
+  putchar('\n');
 
-  return a[0];
+  return a;
 }
 
 void Original(char str_array[iter][max])
@@ -141,7 +141,7 @@ void Increase(char str_array[iter][max])
   }
 }
 
-void Word(char str_array[iter][max])
+void WordSize(char str_array[iter][max])
 {
   int j = 0;
   int i = 0;
@@ -166,25 +166,18 @@ void Word(char str_array[iter][max])
 
   for(i = 0; i < iter; i++)
   {
-    while (notSwapped)
+    for (int j = 0; j < iter; j++)
     {
-      for(j = 0; j < iter - i - 1; j++)
+      if(memory[j] > memory[j + 1])
       {
-          if(memory[j] > memory[j + 1])
-          {
-          temp_int_array[i] = memory[j];
-          strcpy(temp_array, str_array[j]);
+        temp_int_array[i] = memory[j];
+        strcpy(temp_array, str_array[j]);
 
-          memory[j] = memory[j + 1];
-          strcpy(str_array[j], str_array[j + 1]);
+        memory[j] = memory[j + 1];
+        strcpy(str_array[j], str_array[j + 1]);
 
-          memory[j + 1] = temp_int_array[j];
-          strcpy(str_array[j + 1], temp_array);
-
-
-          notSwapped == 0;
-          break;
-        }
+        memory[j + 1] = temp_int_array[j];
+        strcpy(str_array[j + 1], temp_array);
       }
     }
   }
@@ -194,13 +187,3 @@ void Word(char str_array[iter][max])
     puts(str_array[i]);
   }
 }
-
-
-/*
-char* ClearString(char* clearString)
-{
-  clearString[0] = '\n';
-
-  return *clearString;
-}
-*/
