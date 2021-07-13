@@ -19,7 +19,7 @@ int main()
 
   char str_array[iter][max];
   char r;
-  int ch;
+
   size_t m = 100;
 
   for (int i = 0; i < iter; i++)
@@ -63,7 +63,10 @@ int main()
 
 char Menu()
 {
-  char a;
+  int a;
+  char ch;
+
+
 
   puts("Please Choose an Option: ");
   puts("a:    Print the original list of statements");
@@ -72,13 +75,26 @@ char Menu()
   puts("d:    Print the statements in the order of the longest word");
   puts("q:    Quit");
 
-  gets(a);
+  inputs:a = getchar();
 
-  printf("Debug output: %c", a); // debug print shows what is given
+  if (a == 'a' || a=='b' || a=='c' || a=='d' || a=='q') 
+  {
+    ch = a;
+  }
+  else
+  {
+    puts("Given input was rejected! Please try again!");
+
+    goto inputs;
+  }
+  
+  
+
+  printf("Debug output: %c", ch); // debug print shows what is given
 
   putchar('\n');
 
-  return a;
+  return ch;
 }
 
 void Original(char str_array[iter][max])
@@ -143,13 +159,13 @@ void Increase(char str_array[iter][max])
 
 void WordSize(char str_array[iter][max])
 {
-  int j = 0;
-  int i = 0;
+  int i, j;
   char temp_array[max];
   int temp_int_array[iter];
   int memory[iter];
   
-  int notSwapped = 1;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "-1" defined in stdbool.h
+  int swapped = false;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "0" defined in stdbool.h
+  int controller = 0;
 
   for (i = 0; i < iter; i++)
   {
@@ -166,7 +182,7 @@ void WordSize(char str_array[iter][max])
 
   for(i = 0; i < iter; i++)
   {
-    for (int j = 0; j < iter; j++)
+    for (j = 10; j <= 1 + controller ; j--)
     {
       if(memory[j] > memory[j + 1])
       {
@@ -178,7 +194,18 @@ void WordSize(char str_array[iter][max])
 
         memory[j + 1] = temp_int_array[j];
         strcpy(str_array[j + 1], temp_array);
+        swapped = true;
       }
+      else
+      {
+        swapped = false;
+      }
+
+      if (swapped)
+      {
+        controller++;
+      }
+      
     }
   }
 
