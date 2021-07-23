@@ -3,29 +3,91 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define iter 10
-#define max 100
+#define ITER 10
+#define MAX 100
+#define TEXT_APPEND ".txt" 
 
 char Menu();
-void Original(char str_array[iter][max]);
-void Ascii(char str_array[iter][max]);
-void Increase(char str_array[iter][max]);
-void WordSize(char str_array[iter][max]);
+void Original(char str_array[ITER][MAX]);
+void Ascii(char str_array[ITER][MAX]);
+void Increase(char str_array[ITER][MAX]);
+void WordSize(char str_array[ITER][MAX]);
 //char* ClearString(char* inputString);
+
+bool useTxt();
 
 int main()
 {
-  puts("Please type in 10 statements!");
 
-  char str_array[iter][max];
+  char str_array[ITER][MAX];
   char r;
+  RESTART: bool usingText = useTxt();
 
-  size_t m = 100;
-
-  for (int i = 0; i < iter; i++)
+  if(usingText == true)
   {
-    printf("%d: ", i + 1);
-    gets(str_array[i]);
+    char fileName[260]; // 255 is the standard limit for file names 256 for endline character \n and 260 for the file type
+    FILE* fp;
+    size_t lines = 0;
+    char ch;
+
+    puts("Please enter the Text file name:");
+
+    gets(fileName);
+    strcat(fileName, TEXT_APPEND);
+
+    fp = fopen(fileName, 'r');
+
+    if (fp == NULL)
+    {
+      puts("File Failed to Open: File may not exist or was inputted incorrectly!");
+      puts("Please Try Again!");
+
+      goto RESTART;
+    }
+    else
+    {      
+      while (ch != EOF)
+      {
+        if (ch == '\n')
+        {
+           lines++;
+        }
+        ch = fgetc(fp);
+      }
+      
+      if(lines <= 10)
+      {
+        rewind(fp);
+
+        for (int i = 0; i < lines; i++)
+        {
+         fgets(MAX, MAX, fp);//Needs to be adjusted
+        }
+      }
+      else
+      {
+        puts("Too Many Arguments in file: Please Modify Original File or open a different file");
+        goto RESTART;
+      }
+
+      fclose(fp);
+      free(fileName);
+    }
+    
+    
+
+  }
+  else
+  {
+    puts("Please type in 10 statements!");    
+
+    size_t m = 100;
+
+    for (int i = 0; i < ITER; i++)
+    {
+      printf("%d: ", i + 1);
+      gets(str_array[i]);
+    }
   }
 
   while (1)
@@ -33,32 +95,40 @@ int main()
     r = Menu();
 
     switch (r)
-    {
-    case 'a':
-      Original(str_array);
-      break;
-    case 'b':
-      Ascii(str_array);
-      break;
-    case 'c':
-      Increase(str_array);
-      break;
-    case 'd':
-      WordSize(str_array);
-      break;
-    case 'q':
-      puts("Goodbye!");
-      return 0; 
-      break;
-    
-    default:
-      puts("Error: Answer not accepted!");
-      puts("Please choose an option!");
-      break;
+      {
+        case 'a':
+          Original(str_array);
+          break;
+
+        case 'b':
+          Ascii(str_array);
+          break;
+          
+        case 'c':
+          Increase(str_array);
+          break;
+
+        case 'd':
+          WordSize(str_array);
+          break;
+
+        case 'q':
+          puts("Goodbye!");
+          free(str_array);
+          return 0; 
+          break;
+        
+        default:
+          puts("Error: Answer not accepted!");
+          puts("Please choose an option!");
+          break;
     }
   }
   
-  
+  return 0;
+
+  File_Read_Error:
+  perror("Error:");
 }
 
 char Menu()
@@ -97,23 +167,23 @@ char Menu()
   return ch;
 }
 
-void Original(char str_array[iter][max])
+void Original(char str_array[ITER][MAX])
 {
-  for (int i = 0; i < iter; i++)
+  for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
     printf(" ");
   }
 }
 
-void Ascii(char str_array[iter][max])
+void Ascii(char str_array[ITER][MAX])
 {
   int i, j;
-  char temp[max];
+  char temp[MAX];
 
-  for ( i = 0; i < iter; i++)
+  for ( i = 0; i < ITER; i++)
   {
-    for ( j = i + 1; j < iter; j++)
+    for ( j = i + 1; j < ITER; j++)
     {
       if(strcmp( str_array[i], str_array[j]) > 0)
       {
@@ -124,22 +194,22 @@ void Ascii(char str_array[iter][max])
     }
   }
 
-  for (int i = 0; i < iter; i++)
+  for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
     printf(" ");
   }
 }
 
-void Increase(char str_array[iter][max])
+void Increase(char str_array[ITER][MAX])
 {
   int i = 0;
   int j = 0;
-  char temp_array[max];
+  char temp_array[MAX];
   
-  for(i = 0; i < iter; i++)
+  for(i = 0; i < MAX; i++)
     {
-      for(j = 0; j < iter - i - 1; j++)
+      for(j = 0; j < ITER - i - 1; j++)
         {
           if(strlen(str_array[j]) > strlen(str_array[j + 1]))
           {
@@ -150,26 +220,26 @@ void Increase(char str_array[iter][max])
       }
   }
     
-  for (int i = 0; i < iter; i++)
+  for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
     printf(" ");
   }
 }
 
-void WordSize(char str_array[iter][max])
+void WordSize(char str_array[ITER][MAX])
 {
   int i, j;
-  char temp_array[max];
-  int temp_int_array[iter];
-  int memory[iter];
+  char temp_array[MAX];
+  int temp_int_array[ITER];
+  int memory[ITER];
   
   int swapped = false;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "0" defined in stdbool.h
   int controller = 0;
 
-  for (i = 0; i < iter; i++)
+  for (i = 0; i < ITER; i++)
   {
-    for (j = 0; j < max; j++)
+    for (j = 0; j < MAX; j++)
     {
       if (str_array[i][j] == ' ' || str_array[i][j] == '\n')
       {
@@ -180,7 +250,7 @@ void WordSize(char str_array[iter][max])
     }
   }
 
-  for(i = 0; i < iter; i++)
+  for(i = 0; i < ITER; i++)
   {
     for (j = 10; j <= 1 + controller ; j--)
     {
@@ -209,8 +279,27 @@ void WordSize(char str_array[iter][max])
     }
   }
 
-  for (i = 0; i < iter; i++)
+  for (i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
+  }
+}
+
+//a method that prompts the user if they want to use a txt file
+bool useTxtFile()
+{
+  bool isUsingFile = false;
+
+  puts("Would you like to process the strings from a text file? y/n");
+
+  int input = getchar();
+
+  if (input = 'y')
+  {
+    return isUsingFile = true;
+  }
+  else
+  {
+    return isUsingFile = false; 
   }
 }
