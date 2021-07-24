@@ -12,13 +12,11 @@ void Original(char str_array[ITER][MAX]);
 void Ascii(char str_array[ITER][MAX]);
 void Increase(char str_array[ITER][MAX]);
 void WordSize(char str_array[ITER][MAX]);
-//char* ClearString(char* inputString);
 
 bool useTxt();
 
 int main()
 {
-
   char str_array[ITER][MAX];
   char r;
   RESTART: bool usingText = useTxt();
@@ -50,7 +48,7 @@ int main()
       {
         if (ch == '\n')
         {
-           lines++;
+          lines++;
         }
         ch = fgetc(fp);
       }
@@ -73,9 +71,6 @@ int main()
       fclose(fp);
       free(fileName);
     }
-    
-    
-
   }
   else
   {
@@ -95,33 +90,33 @@ int main()
     r = Menu();
 
     switch (r)
-      {
-        case 'a':
-          Original(str_array);
-          break;
+    {
+      case 'a':
+        Original(str_array);
+        break;
 
-        case 'b':
-          Ascii(str_array);
-          break;
-          
-        case 'c':
-          Increase(str_array);
-          break;
-
-        case 'd':
-          WordSize(str_array);
-          break;
-
-        case 'q':
-          puts("Goodbye!");
-          free(str_array);
-          return 0; 
-          break;
+      case 'b':
+        Ascii(str_array);
+        break;
         
-        default:
-          puts("Error: Answer not accepted!");
-          puts("Please choose an option!");
-          break;
+      case 'c':
+        Increase(str_array);
+        break;
+
+      case 'd':
+        WordSize(str_array);
+        break;
+
+      case 'q':
+        puts("Goodbye!");
+        free(str_array);
+        return 0; 
+        break;
+      
+      default:
+        puts("Error: Answer not accepted!");
+        puts("Please choose an option!");
+        break;
     }
   }
   
@@ -135,8 +130,6 @@ char Menu()
 {
   int a;
   char ch;
-
-
 
   puts("Please Choose an Option: ");
   puts("a:    Print the original list of statements");
@@ -157,12 +150,9 @@ char Menu()
 
     goto inputs;
   }
-  
-  
 
   printf("Debug output: %c", ch); // debug print shows what is given
-
-  putchar('\n');
+  putchar('\n'); //Have not decided how the spacing will work
 
   return ch;
 }
@@ -210,15 +200,15 @@ void Increase(char str_array[ITER][MAX])
   for(i = 0; i < MAX; i++)
     {
       for(j = 0; j < ITER - i - 1; j++)
+      {
+        if(strlen(str_array[j]) > strlen(str_array[j + 1]))
         {
-          if(strlen(str_array[j]) > strlen(str_array[j + 1]))
-          {
-            strcpy(temp_array, str_array[j]);
-            strcpy(str_array[j], str_array[j + 1]);
-            strcpy(str_array[j + 1], temp_array);
-          }
+          strcpy(temp_array, str_array[j]);
+          strcpy(str_array[j], str_array[j + 1]);
+          strcpy(str_array[j + 1], temp_array);
+        }
       }
-  }
+    }
     
   for (int i = 0; i < ITER; i++)
   {
@@ -274,8 +264,7 @@ void WordSize(char str_array[ITER][MAX])
       if (swapped)
       {
         controller++;
-      }
-      
+      }  
     }
   }
 
