@@ -59,12 +59,25 @@ int main()
 
         for (int i = 0; i < lines; i++)
         {
-         fgets(MAX, MAX, fp);//Needs to be adjusted
+          for (int j = 0; j < MAX; j++)
+          {
+            while ((ch = fgetchar() != EOF))
+            {
+              if (ch != '\n')
+              {
+                str_array[i][j] = ch;
+              }
+              else
+              {
+                break;
+              }
+            }            
+          } 
         }
       }
       else
       {
-        puts("Too Many Arguments in file: Please Modify Original File or open a different file");
+        puts("Too many arguments in file: Please modify original file or open a different file");
         goto RESTART;
       }
 
@@ -74,9 +87,7 @@ int main()
   }
   else
   {
-    puts("Please type in 10 statements!");    
-
-    size_t m = 100;
+    puts("Please type in 10 statements!");
 
     for (int i = 0; i < ITER; i++)
     {
@@ -224,7 +235,7 @@ void WordSize(char str_array[ITER][MAX])
   int temp_int_array[ITER];
   int memory[ITER];
   
-  int swapped = false;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "0" defined in stdbool.h
+  bool isSwapped = false;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "0" defined in stdbool.h
   int controller = 0;
 
   for (i = 0; i < ITER; i++)
@@ -254,14 +265,14 @@ void WordSize(char str_array[ITER][MAX])
 
         memory[j + 1] = temp_int_array[j];
         strcpy(str_array[j + 1], temp_array);
-        swapped = true;
+        isSwapped = true;
       }
       else
       {
-        swapped = false;
+        isSwapped = false;
       }
 
-      if (swapped)
+      if (isSwapped)
       {
         controller++;
       }  
