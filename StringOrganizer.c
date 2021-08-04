@@ -13,34 +13,42 @@ void Ascii(char str_array[ITER][MAX]);
 void Increase(char str_array[ITER][MAX]);
 void WordSize(char str_array[ITER][MAX]);
 
-bool useTxt();
 
 int main()
 {
   char str_array[ITER][MAX];
   char r;
-  RESTART: bool usingText = useTxt();
+  char usingText;
 
-  if(usingText == true)
+  puts("Would you like to use a Text file?");
+  puts("y/n: ");
+
+  scanf(" %c", &usingText);
+  
+
+  if(usingText == 'y')
   {
     char fileName[260]; // 255 is the standard limit for file names 256 for endline character \n and 260 for the file type
     FILE* fp;
     size_t lines = 0;
     char ch;
+    int i;
 
     puts("Please enter the Text file name:");
 
-    gets(fileName);
+    scanf(" %s", &fileName);
+    
+
     strcat(fileName, TEXT_APPEND);
 
-    fp = fopen(fileName, 'r');
+    fp = fopen(fileName, "r");
 
     if (fp == NULL)
     {
       puts("File Failed to Open: File may not exist or was inputted incorrectly!");
       puts("Please Try Again!");
 
-      goto RESTART;
+      return 0;
     }
     else
     {      
@@ -61,13 +69,13 @@ int main()
         {
           for (int j = 0; j < MAX; j++)
           {
-            while ((ch = fgetchar() != EOF))
+            while ((ch = fgetchar()) != EOF)
             {
               if (ch != '\n')
               {
                 str_array[i][j] = ch;
               }
-              else
+              else if (ch =='\n')
               {
                 break;
               }
@@ -78,7 +86,7 @@ int main()
       else
       {
         puts("Too many arguments in file: Please modify original file or open a different file");
-        goto RESTART;
+        return 0;
       }
 
       fclose(fp);
@@ -173,7 +181,7 @@ void Original(char str_array[ITER][MAX])
   for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
-    printf(" ");
+    printf("\n");
   }
 }
 
@@ -198,7 +206,7 @@ void Ascii(char str_array[ITER][MAX])
   for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
-    printf(" ");
+    printf("\n");
   }
 }
 
@@ -224,7 +232,7 @@ void Increase(char str_array[ITER][MAX])
   for (int i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
-    printf(" ");
+    printf("\n");
   }
 }
 
@@ -282,24 +290,6 @@ void WordSize(char str_array[ITER][MAX])
   for (i = 0; i < ITER; i++)
   {
     puts(str_array[i]);
-  }
-}
-
-//a method that prompts the user if they want to use a txt file
-bool useTxtFile()
-{
-  bool isUsingFile = false;
-
-  puts("Would you like to process the strings from a text file? y/n");
-
-  int input = getchar();
-
-  if (input = 'y')
-  {
-    return isUsingFile = true;
-  }
-  else
-  {
-    return isUsingFile = false; 
+    printf("\n");
   }
 }

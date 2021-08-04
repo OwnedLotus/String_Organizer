@@ -6,21 +6,19 @@
 
 int main(int argc, char const *argv[])
 {
-  int a;
-  char ch;
+  FILE *fp;
+  int ch;
 
-  a = getc(stdin);
+  fp = fopen("Strings.txt", "r");
 
-  if (a == 'a')
+  if (fp == NULL)
   {
-    ch = a;
+    printf("Error File Read");
   }
-  else
-  {
-    puts("Illegal character!");
-  }
+  fscanf(fp, "%d", &ch);
+  
 
-  printf("%c", ch);
-
+  printf(" %d", ch);
+  fclose(fp);
   return 0;
 }

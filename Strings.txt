@@ -1,0 +1,10 @@
+Hello There
+Where am I
+This is a new File
+Can this really be read by the Program
+I am not totally sure this works
+Do you think that this will work correctly?
+I have my doubts
+But I do need my 10 strings
+So this will have to do
+GoodLuck!
