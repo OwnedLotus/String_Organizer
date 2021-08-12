@@ -3,22 +3,25 @@
   It is not in any way part of the original codebase or will it be executed with the main program.
 */
 #include <stdio.h>
+#include <stdlib.h>
+
+void QuickSort(int* arr);
 
 int main(int argc, char const *argv[])
 {
-  FILE *fp;
-  int ch;
+  int* arr;
+  arr = malloc(5);
 
-  fp = fopen("Strings.txt", "r");
+  arr[0] = 1;
+  arr[1] = 83;
+  arr[2] = 32;
+  arr[3] = 2;
+  arr[4] = 100;
 
-  if (fp == NULL)
-  {
-    printf("Error File Read");
-  }
-  fscanf(fp, "%d", &ch);
+  QuickSort(arr);
+}
+
+void QuickSort(int* arr)
+{
   
-
-  printf(" %d", ch);
-  fclose(fp);
-  return 0;
 }

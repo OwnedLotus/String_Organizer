@@ -13,7 +13,6 @@ void Ascii(char str_array[ITER][MAX]);
 void Increase(char str_array[ITER][MAX]);
 void WordSize(char str_array[ITER][MAX]);
 
-
 int main()
 {
   char str_array[ITER][MAX];
@@ -24,9 +23,8 @@ int main()
   puts("y/n: ");
 
   scanf(" %c", &usingText);
-  
 
-  if(usingText == 'y')
+   if(usingText == 'y')
   {
     char fileName[260]; // 255 is the standard limit for file names 256 for endline character \n and 260 for the file type
     FILE* fp;
@@ -102,40 +100,40 @@ int main()
       printf("%d: ", i + 1);
       gets(str_array[i]);
     }
-  }
 
-  while (1)
-  {
-    r = Menu();
-
-    switch (r)
+    while (1)
     {
-      case 'a':
-        Original(str_array);
-        break;
+      r = Menu();
 
-      case 'b':
-        Ascii(str_array);
-        break;
+      switch (r)
+      {
+        case 'a':
+          Original(str_array);
+          break;
+
+        case 'b':
+          Ascii(str_array);
+          break;
+          
+        case 'c':
+          Increase(str_array);
+          break;
+
+        case 'd':
+          WordSize(str_array);
+          break;
+
+        case 'q':
+          puts("Goodbye!");
+          free(str_array);
+          return 0; 
+          break;
         
-      case 'c':
-        Increase(str_array);
-        break;
-
-      case 'd':
-        WordSize(str_array);
-        break;
-
-      case 'q':
-        puts("Goodbye!");
-        free(str_array);
-        return 0; 
-        break;
-      
-      default:
-        puts("Error: Answer not accepted!");
-        puts("Please choose an option!");
-        break;
+        default:
+          puts("Error: Answer not accepted!");
+          puts("Please choose an option!");
+          break;
+      }
     }
   }
   
@@ -143,6 +141,7 @@ int main()
 
   File_Read_Error:
   perror("Error:");
+  return -1;
 }
 
 char Menu()
