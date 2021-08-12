@@ -13,95 +13,18 @@ void Ascii(char str_array[ITER][MAX]);
 void Increase(char str_array[ITER][MAX]);
 void WordSize(char str_array[ITER][MAX]);
 
-
 int main()
 {
   char str_array[ITER][MAX];
   char r;
   char usingText;
 
-  puts("Would you like to use a Text file?");
-  puts("y/n: ");
+  puts("Please type in 10 statements!");
 
-  scanf(" %c", &usingText);
-  
-
-  if(usingText == 'y')
+  for (int i = 0; i < ITER; i++)
   {
-    char fileName[260]; // 255 is the standard limit for file names 256 for endline character \n and 260 for the file type
-    FILE* fp;
-    size_t lines = 0;
-    char ch;
-    int i;
-
-    puts("Please enter the Text file name:");
-
-    scanf(" %s", &fileName);
-    
-
-    strcat(fileName, TEXT_APPEND);
-
-    fp = fopen(fileName, "r");
-
-    if (fp == NULL)
-    {
-      puts("File Failed to Open: File may not exist or was inputted incorrectly!");
-      puts("Please Try Again!");
-
-      return 0;
-    }
-    else
-    {      
-      while (ch != EOF)
-      {
-        if (ch == '\n')
-        {
-          lines++;
-        }
-        ch = fgetc(fp);
-      }
-      
-      if(lines <= 10)
-      {
-        rewind(fp);
-
-        for (int i = 0; i < lines; i++)
-        {
-          for (int j = 0; j < MAX; j++)
-          {
-            while ((ch = fgetchar()) != EOF)
-            {
-              if (ch != '\n')
-              {
-                str_array[i][j] = ch;
-              }
-              else if (ch =='\n')
-              {
-                break;
-              }
-            }            
-          } 
-        }
-      }
-      else
-      {
-        puts("Too many arguments in file: Please modify original file or open a different file");
-        return 0;
-      }
-
-      fclose(fp);
-      free(fileName);
-    }
-  }
-  else
-  {
-    puts("Please type in 10 statements!");
-
-    for (int i = 0; i < ITER; i++)
-    {
-      printf("%d: ", i + 1);
-      gets(str_array[i]);
-    }
+    printf("%d: ", i + 1);
+    gets(str_array[i]);
   }
 
   while (1)
@@ -140,9 +63,6 @@ int main()
   }
   
   return 0;
-
-  File_Read_Error:
-  perror("Error:");
 }
 
 char Menu()
