@@ -19,50 +19,129 @@ int main()
   char r;
   char usingText;
 
-  puts("Please type in 10 statements!");
+  puts("Would you like to use a Text file?");
+  puts("y/n: ");
 
-  for (int i = 0; i < ITER; i++)
+  scanf(" %c", &usingText);
+
+   if(usingText == 'y')
   {
-    printf("%d: ", i + 1);
-    gets(str_array[i]);
-  }
+    char fileName[260]; // 255 is the standard limit for file names 256 for endline character \n and 260 for the file type
+    FILE* fp;
+    size_t lines = 0;
+    char ch;
+    int i;
 
-  while (1)
-  {
-    r = Menu();
+    puts("Please enter the Text file name:");
 
-    switch (r)
+    scanf(" %s", &fileName);
+    
+
+    strcat(fileName, TEXT_APPEND);
+
+    fp = fopen(fileName, "r");
+
+    if (fp == NULL)
     {
-      case 'a':
-        Original(str_array);
-        break;
+      puts("File Failed to Open: File may not exist or was inputted incorrectly!");
+      puts("Please Try Again!");
 
-      case 'b':
-        Ascii(str_array);
-        break;
-        
-      case 'c':
-        Increase(str_array);
-        break;
-
-      case 'd':
-        WordSize(str_array);
-        break;
-
-      case 'q':
-        puts("Goodbye!");
-        free(str_array);
-        return 0; 
-        break;
+      return 0;
+    }
+    else
+    {      
+      while (ch != EOF)
+      {
+        if (ch == '\n')
+        {
+          lines++;
+        }
+        ch = fgetc(fp);
+      }
       
-      default:
-        puts("Error: Answer not accepted!");
-        puts("Please choose an option!");
-        break;
+      if(lines <= 10)
+      {
+        rewind(fp);
+
+        for (int i = 0; i < lines; i++)
+        {
+          for (int j = 0; j < MAX; j++)
+          {
+            while ((ch = fgetchar()) != EOF)
+            {
+              if (ch != '\n')
+              {
+                str_array[i][j] = ch;
+              }
+              else if (ch =='\n')
+              {
+                break;
+              }
+            }            
+          } 
+        }
+      }
+      else
+      {
+        puts("Too many arguments in file: Please modify original file or open a different file");
+        return 0;
+      }
+
+      fclose(fp);
+      free(fileName);
+    }
+  }
+  else
+  {
+    puts("Please type in 10 statements!");
+
+    for (int i = 0; i < ITER; i++)
+    {
+      printf("%d: ", i + 1);
+      gets(str_array[i]);
+    }
+
+    while (1)
+    {
+      r = Menu();
+
+      switch (r)
+      {
+        case 'a':
+          Original(str_array);
+          break;
+
+        case 'b':
+          Ascii(str_array);
+          break;
+          
+        case 'c':
+          Increase(str_array);
+          break;
+
+        case 'd':
+          WordSize(str_array);
+          break;
+
+        case 'q':
+          puts("Goodbye!");
+          free(str_array);
+          return 0; 
+          break;
+        
+        default:
+          puts("Error: Answer not accepted!");
+          puts("Please choose an option!");
+          break;
+      }
     }
   }
   
   return 0;
+
+  File_Read_Error:
+  perror("Error:");
+  return -1;
 }
 
 char Menu()
