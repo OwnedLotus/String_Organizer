@@ -5,7 +5,7 @@
 
 #define ITER 10
 #define MAX 100
-#define TEXT_APPEND ".txt" 
+//#define TEXT_APPEND ".txt" 
 
 char Menu();
 void Original(char str_array[ITER][MAX]);
@@ -17,7 +17,7 @@ int main()
 {
   char str_array[ITER][MAX];
   char r;
-  char usingText;
+  //char usingText;
 
   puts("Please type in 10 statements!");
 
@@ -51,7 +51,6 @@ int main()
 
       case 'q':
         puts("Goodbye!");
-        free(str_array);
         return 0; 
         break;
       
@@ -159,13 +158,14 @@ void Increase(char str_array[ITER][MAX])
 void WordSize(char str_array[ITER][MAX])
 {
   int i, j;
-  char temp_array[MAX];
-  int temp_int_array[ITER];
+  int temp_int;
   int memory[ITER];
+  char temp_array[MAX];
   
-  bool isSwapped = false;  // a kind of bool that represents if the string has been swapped, if swapped it will switch to false "0" defined in stdbool.h
+  bool isSwapped = false;
   int controller = 0;
 
+  //Working as intended
   for (i = 0; i < ITER; i++)
   {
     for (j = 0; j < MAX; j++)
@@ -179,31 +179,22 @@ void WordSize(char str_array[ITER][MAX])
     }
   }
 
+  //Not working as intended
   for(i = 0; i < ITER; i++)
   {
-    for (j = 10; j <= 1 + controller ; j--)
+    for (j = 0; i < ITER; i++)
     {
       if(memory[j] > memory[j + 1])
       {
-        temp_int_array[i] = memory[j];
+        temp_int = memory[j];
         strcpy(temp_array, str_array[j]);
 
         memory[j] = memory[j + 1];
         strcpy(str_array[j], str_array[j + 1]);
 
-        memory[j + 1] = temp_int_array[j];
+        memory[j + 1] = temp_int;
         strcpy(str_array[j + 1], temp_array);
-        isSwapped = true;
       }
-      else
-      {
-        isSwapped = false;
-      }
-
-      if (isSwapped)
-      {
-        controller++;
-      }  
     }
   }
 
